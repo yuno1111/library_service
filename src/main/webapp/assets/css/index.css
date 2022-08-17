@@ -1,0 +1,25 @@
+
+.book_recommend_area{
+    width: 990px; margin: 0 auto; padding-top: 150px;
+}
+.book_recommend_area > h1 {
+    text-align: center; margin-bottom: 50px; font-family: 'Noto Sans KR'; font-size: 22px; font-weight: 700;
+}
+
+.main_banner {
+    width: 500px; margin: 0 auto; height: 500px;
+}
+.main_banner .swiper-button-prev {
+    left: 0px; filter:grayscale(1) brightness(10) drop-shadow(2px 2px 5px rgba(0,0,0,0.3));
+}
+.main_banner .swiper-button-next {
+    right: 0px; filter:grayscale(1) brightness(10) drop-shadow(2px 2px 5px rgba(0,0,0,0.3));
+}
+.book_recommend_img_area{
+    margin: 0 auto;
+    width: 300px; height: 400px; background-position: center; background-size: 100% auto; background-repeat: no-repeat;
+}
+.subscribe > i {
+    position: absolute; right: 0; top: 0;
+    font-size: 22px; color: rgb(252, 53, 53); z-index: 9; cursor: pointer;
+}

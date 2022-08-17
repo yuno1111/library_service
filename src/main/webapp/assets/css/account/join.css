@@ -1,0 +1,47 @@
+main{
+    min-width: 1280px; padding-bottom: 150px;
+}
+.join_area {position: relative;text-align: center;  width: 900px;  max-height: 800px; border: 1px solid #eee;
+    box-shadow: 0 0 10px rgba(0,0,0,0.15); border-radius: 5px;  margin:auto; margin-top: 70px;
+}
+
+.join_area h1 {font-size: 28px; font-family: 'GmarketSansMedium'; margin-top: 10px;}
+.join_area p {font-size: 26px; font-family: 'GmarketSansLight'; margin-top: 10px; margin-bottom: 20px;}
+.join_area table {
+    width: 900px; height: 661px; display: inline-block; text-align-last: left;
+}
+.join_area table td {font-family: 'GmarketSansMedium'; font-size: 18px; 
+    padding: 10px 0;
+}
+.join_area table td input {font-family: 'GmarketSansLight'; font-size: 18px; margin-left: 10px;
+    border: 0; border-bottom: 1px solid #aaa; width: 250px; outline: none;}
+.join_area table td button, .login_area table td a {
+    display: block; box-sizing: border-box; width: 100%;
+    padding: 10px 0; text-align: center; font-family: 'GmarketSansMedium';
+    font-size: 16px; border: 0; text-decoration: none; color: #fff;
+    background-color: #43c2d8; margin-top: 15px; border-radius: 10px;
+}
+.join_area table td button{
+    cursor: pointer;
+}
+.profile_img_area{
+    border: 1px solid #000; position: absolute; width: 300px; height: 300px; display: inline-block; top: 195px;
+    right: 85px; border-radius: 999px;
+}
+.profile_img_area .profile_imgs{
+    width: 300px;height: 300px; background-size: 100%; background-repeat: no-repeat; background-position: center; border-radius: 999px;
+}
+.profile_explain{position: absolute; top: 155px;right: 180px; font-size: 22px; font-weight: 500;
+}
+#alrim {
+    width: 10px; text-align-last: left;
+}
+
+.button_area{
+    margin-bottom: 20px;
+}
+
+.button_area button{
+    width: 80px; height: 30px; display: inline-block; text-align: center;  background-color: #43c2d8; border: 0;
+    border-radius: 10px; color: #fff; cursor: pointer;
+}

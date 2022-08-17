@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.greenart.library_service.mapper.BookMapper">
+    <select id="selectSummaryBooksBySeq" resultType="com.greenart.library_service.data.Book_infoVO">
+        select a.*,b.wri_name,c.gr_name  from book_info a 
+        left outer join writer_info b
+        on a.bi_wri_seq = b.wri_seq left outer join genre_info c
+        on a.bi_gr_seq = c.gr_seq 
+        where bi_seq = #{seq}
+    </select>
+    <select id="selectBooksCoverBySeq" resultType="com.greenart.library_service.data.BookCoverListVO">
+        select bc_seq as seq,bc_img_file as book_covers from book_cover_info where bc_bi_seq = #{seq}
+    </select>
+    <select id="selectBookContentBySeq" resultType="com.greenart.library_service.data.BookContentListVO">
+        select bcon_page as 'order', bcon_text as content from book_content_info where bcon_bi_seq = #{seq}
+    </select>
+    <select id="selectBookTextFile" resultType="java.lang.String">
+        select bt_text_file from book_text_info where bt_bi_seq = #{seq}
+    </select>
+
+    <select id="selectAllBookReply" resultType="com.greenart.library_service.data.BookReplyVO">
+        select a.*,b.rd_seq ,b.rd_id ,b.rd_nickname  from book_reply a left outer join reader_info b 
+        on a.bre_rd_seq = b.rd_seq 
+        where bre_bi_seq = #{seq}
+        order by bre_seq desc
+        limit 10
+    </select>
+    <select id="selectAllBookReplyCnt" resultType="java.lang.Integer">
+        select ceil(count(*)/10) from book_reply where bre_bi_seq = #{seq}
+    </select>
+    <select id="selectUserBookReply" resultType="com.greenart.library_service.data.BookReplyVO">
+        select a.*,b.rd_seq ,b.rd_id ,b.rd_nickname  from book_reply a left outer join reader_info b 
+        on a.bre_rd_seq = b.rd_seq 
+        where bre_bi_seq = #{seq} and bre_rd_seq = #{rd_seq}
+    </select>
+
+    <insert id="insertBookReply">
+        INSERT INTO book_reply
+        (bre_bi_seq, bre_rd_seq, bre_text, bre_reg_dt, bre_mod_dt)
+        VALUES
+        (#{bre_bi_seq}, #{bre_rd_seq}, #{bre_text}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+    </insert>
+    <update id="updateBookReply">
+        update book_reply
+        set
+        bre_text=#{bre_text}
+        where bre_seq=#{bre_seq}
+    </update>
+    <delete id="deleteBookReply">
+        delete from book_reply where bre_seq = #{seq}
+    </delete>
+</mapper>

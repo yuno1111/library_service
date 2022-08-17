@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.greenart.library_service.mapper.ReaderMapper">
+    <select id="selectAllUserSubBooks" resultType="com.greenart.library_service.data.BookSummaryVO">
+        select b.bi_seq ,b.bi_title ,c.bc_img_file ,d.wri_name  from book_subscribe_info a inner join book_info b
+        on a.bsub_bi_seq = b.bi_seq left outer join 
+        (
+            select * from book_cover_info where bc_is_poster =1
+        ) c 
+        on b.bi_seq = c.bc_bi_seq left outer join writer_info d
+        on b.bi_wri_seq = d.wri_seq
+        where a.bsub_rd_seq = #{seq}
+        group by bi_seq
+    </select>
+    <select id="selectUserStorage" resultType="com.greenart.library_service.data.StorageVO">
+        select * from storage_info where sto_rd_seq = #{seq}
+    </select>
+    <select id="selectUserStorageDetail" resultType="com.greenart.library_service.data.StorageVO">
+        select a.sto_seq ,a.sto_name,a.sto_open,d.bc_img_file as img ,count(b.mb_rd_seq) as cnt from storage_info a left outer join my_book_info b
+        on b.mb_sto_seq = a.sto_seq left outer join book_info c 
+        on b.mb_bi_seq = c.bi_seq left outer join 
+        (
+            select * from book_cover_info where bc_is_poster =1
+        )d 
+        on c.bi_seq  = d.bc_bi_seq
+        where sto_rd_seq = #{seq}
+        group by a.sto_seq
+    </select>
+    <select id="selectAllUserBooks" resultType="com.greenart.library_service.data.MaxSubBookVO">
+        select a.mb_seq,b.bi_seq,b.bi_title ,c.wri_name ,d.gr_name ,e.bc_img_file from my_book_info a left outer join book_info b
+        on a.mb_bi_seq = b.bi_seq left outer join writer_info c 
+        on b.bi_wri_seq = c.wri_seq left outer join genre_info d 
+        on b.bi_gr_seq = d.gr_seq left outer join 
+        (
+            select * from book_cover_info where bc_is_poster =1
+        )e on b.bi_seq = e.bc_bi_seq
+        where a.mb_sto_seq = #{seq}
+    </select>
+
+    <select id="selectUserQna" resultType="com.greenart.library_service.data.QnaVO">
+        select a.*,b.an_text ,c.aai_id  from question_info a left outer join answer_info b
+        on a.qi_seq = b.an_qi_seq left outer join admin_account_info c 
+        on b.an_aai_seq = c.aai_seq 
+        where a.qi_rd_seq = #{seq}
+        order by qi_seq desc
+        limit 10 offset #{offset}
+    </select>
+    <select id="selectUserQnaCnt" resultType="java.lang.Integer">
+        select ceil(count(*)/10) from question_info where qi_rd_seq = #{seq}
+    </select>
+    <select id="selectUserQnaDetail" resultType="com.greenart.library_service.data.QnaVO">
+        select a.*,b.an_text ,c.aai_id  from question_info a left outer join answer_info b
+        on a.qi_seq = b.an_qi_seq left outer join admin_account_info c 
+        on b.an_aai_seq = c.aai_seq 
+        where a.qi_seq = #{seq}
+        order by qi_seq desc
+    </select>
+    <select id="isDubplicateMybook" resultType="java.lang.Integer">
+        select count(*) from my_book_info where mb_rd_seq=#{rd_seq} and mb_bi_seq=#{bi_seq} and mb_sto_seq=#{sto_seq}
+    </select>
+    <insert id="insertUserQna">
+        INSERT INTO question_info
+        (qi_rd_seq, qi_text, qi_check, qi_title, qi_reg_dt)
+        VALUES
+        (#{qi_rd_seq}, #{qi_text}, 0, #{qi_title}, now())
+    </insert>
+    <update id="updateUserQna">
+        update question_info
+        set 
+        qi_title = #{qi_title}, qi_text = #{qi_text}
+        where
+        qi_seq = #{qi_seq}
+    </update>
+    <delete id="deleteUserQna">
+        delete from question_info where qi_seq = #{seq}
+    </delete>
+
+    <insert id="insertUserStorage">
+        INSERT INTO storage_info
+        (sto_rd_seq, sto_name, sto_open)
+        VALUES
+        (#{sto_rd_seq}, #{sto_name}, #{sto_open})
+    </insert>
+    <insert id="insertFirstStorage"  parameterType="com.greenart.library_service.data.StorageVO" useGeneratedKeys="true" keyProperty="sto_seq">
+        INSERT INTO storage_info
+        (sto_rd_seq, sto_name, sto_open)
+        VALUES
+        (#{sto_rd_seq}, #{sto_name}, #{sto_open})
+    </insert>
+    <insert id="insertMybook">
+        INSERT INTO my_book_info
+        (mb_rd_seq, mb_bi_seq, mb_sto_seq)
+        VALUES
+        (#{rd_seq}, #{bi_seq}, #{sto_seq})
+    </insert>
+    <update id="updateStorageOpen">
+        update storage_info 
+        set sto_open = #{open}
+        where sto_seq = #{seq}
+    </update>
+    <update id="updateStorageName">
+        update storage_info 
+        set sto_name = #{name}
+        where sto_seq = #{seq}
+    </update>
+    <delete id="deleteStorageBook">
+        delete from my_book_info where mb_seq = #{seq}
+    </delete>
+    <delete id="deleteStorage">
+        delete from storage_info where sto_seq = #{seq}
+    </delete>
+
+    <select id="selectAllPaymentList" resultType="com.greenart.library_service.data.RecurringPaymentVO">
+        select * from recurring_payment;
+    </select> 
+    <select id="selectAllUserPayment" resultType="com.greenart.library_service.data.ReaderPaymentVO">
+        select rd_seq,rd_rpi_seq from reader_info;
+    </select> 
+    <select id="selectUserPayment" resultType="java.lang.Integer">
+        select rd_rpi_seq from reader_info where rd_seq = #{seq}
+    </select> 
+    <select id="selectUserPaymentScheduled" resultType="java.lang.Integer">
+        select rpi_rd_seq  from recurring_payment_item
+        where rpi_end_dt  between now() and rpi_end_dt 
+        and rpi_seq = #{seq}
+    </select>
+
+    <insert id="insertUserPayment"  parameterType="com.greenart.library_service.data.RecurringPaymentItemVO" useGeneratedKeys="true" keyProperty="rpi_seq">
+        INSERT INTO recurring_payment_item
+        (rpi_rp_seq, rpi_rd_seq, rpi_end_dt)
+        VALUES
+        (#{rpi_rp_seq}, #{rpi_rd_seq}, DATE_ADD(NOW(), INTERVAL ${period} MINUTE))
+    </insert>
+    <update id="updateUserPaymentInfo">
+        update reader_info
+        set rd_rpi_seq = #{rpi_seq}
+        where rd_seq = #{rd_seq}
+    </update>
+    <update id="updateUserPaymentInfoEnd">
+        update reader_info
+        set rd_rpi_seq = 0
+        where rd_seq = #{seq}
+    </update>
+</mapper>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.greenart.library_service.mapper.MainMapper">
+    <select id="selectAllMaxSubBooks" resultType="com.greenart.library_service.data.MaxSubBookVO">
+        select a.bi_seq ,a.bi_title ,b.wri_name,c.gr_name,subcnt,e.bc_img_file, bsi.bsub_rd_seq as subscribe from book_info a 
+        left outer join writer_info b
+        on a.bi_wri_seq = b.wri_seq left outer join genre_info c
+        on a.bi_gr_seq = c.gr_seq left outer join 
+        (
+            select bsub_bi_seq,count(bsub_bi_seq) as subcnt from book_subscribe_info 
+            group by bsub_bi_seq 
+        )d on a.bi_seq = d.bsub_bi_seq left outer join
+        (
+            select * from book_cover_info where bc_is_poster = 1
+        )e 
+        on a.bi_seq = e.bc_bi_seq 
+        left outer join(
+            select * from book_subscribe_info where bsub_rd_seq = #{seq}
+        ) bsi
+        on a.bi_seq = bsi.bsub_bi_seq
+        group by bi_seq
+        order by subcnt desc
+        limit 5
+    </select>
+
+    <select id="selectAllNoticeInfo" resultType="com.greenart.library_service.data.NoticeInfoVO">
+        select a.*,b.aai_id  from notice_info a inner join admin_account_info b 
+        on a.ni_aai_seq = b.aai_seq 
+        where ni_title like '%${keyword}%'
+        order by ni_seq desc
+        limit 10 offset #{offset}
+    </select>
+    <select id="selectAllNoticePageCnt" resultType="java.lang.Integer">
+        select ceil(count(*)/10) from notice_info where ni_title like '%${keyword}%'
+    </select>
+    <select id="selectNoticeInfoBySeq" resultType="com.greenart.library_service.data.NoticeInfoVO">
+        select a.*,b.aai_id  from notice_info a inner join admin_account_info b 
+        on a.ni_aai_seq = b.aai_seq 
+        where ni_seq = #{seq}
+    </select>
+</mapper>

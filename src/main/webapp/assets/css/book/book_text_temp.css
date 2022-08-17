@@ -1,0 +1,14 @@
+.book_text * {
+    font-family: 'Noto Sans KR';  word-break: keep-all;
+}
+.book_text_area{
+    width: 900px; height: 600px; margin: 0 auto; border: 1px solid #000;
+}
+.book_function_area{
+    width: 900px; margin: 0 auto; text-align: center; margin-top: 20px; margin-bottom: 10px;
+}
+.book_text_item {
+    position: absolute;
+    line-height: 1.7;  width: 900px; height: 580px; font-size: 17px;
+}
+.book_remote_controller{position: fixed; bottom: 250px; right: 250px; z-index: 9;}

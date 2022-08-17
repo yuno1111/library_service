@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.greenart.library_service.mapper.AccountMapper">
+    <!-- 회원가입 AREA -->
+    <insert id="joinReader">
+        INSERT INTO reader_info
+        (rd_rpi_seq, rd_id, rd_pwd, rd_name, rd_phone, rd_gen, rd_role, rd_status, rd_nickname, rd_reg_dt, rd_mod_dt, rd_profile, rd_birth)
+        VALUES
+        (0, #{rd_id}, #{rd_pwd}, #{rd_name}, #{rd_phone}, #{rd_gen}, 1, #{rd_status}, #{rd_nickname}, now(), now(), #{rd_profile}, #{rd_birth})
+    </insert>
+
+    <select id="IsDuplicateCheck" resultType="java.lang.Integer">
+        select count(*) from reader_info where rd_id = #{id}
+    </select>
+    <select id="isDuplicatePhone" resultType="java.lang.Integer">
+        select count(*) from reader_info where rd_phone = #{phone}
+    </select>
+    <select id="login" resultType="com.greenart.library_service.data.ReaderInfoVO">
+        select rd_seq ,rd_id,rd_rpi_seq ,rd_name ,rd_phone ,rd_gen ,rd_role ,rd_nickname ,rd_profile from reader_info
+        where rd_id = #{rd_id} and rd_pwd = #{rd_pwd}
+    </select>
+    <!-- ============= -->
+
+    <!-- 유저 책 구독 AREA -->
+    <insert id="insertUserBookSub">
+        INSERT INTO book_subscribe_info
+        (bsub_bi_seq, bsub_rd_seq)
+        VALUES
+        (#{bi_seq}, #{rd_seq})
+    </insert>
+    <delete id="deleteUserBookSub">
+        delete from book_subscribe_info
+        where bsub_bi_seq = #{bsub_seq} and bsub_rd_seq = #{rd_seq}
+    </delete>
+    <!-- ================ -->
+</mapper>

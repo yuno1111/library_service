@@ -1,0 +1,14 @@
+.add_my_storage{display: inline-block;}
+
+.add_storage_popup_area{
+    position: fixed; width: 100vw; height: 100vh; left: 0; top: 0; background-color: #00000055; z-index: 99;
+}
+.storage_list_popup{
+    width: 250px; height: 300px; margin: 0 auto; background-color: #fff; margin-top: 250px;
+}
+.storage_item_area p {
+    margin-top: 10px; border-bottom: 1px solid rgba(0, 0, 0, 0.253); cursor: pointer;
+}
+.storage_item_area p:hover {
+    background-color: rgb(124, 122, 122);
+}
