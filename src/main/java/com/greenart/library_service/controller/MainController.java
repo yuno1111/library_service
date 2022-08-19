@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.greenart.library_service.data.ReaderInfoVO;
 import com.greenart.library_service.mapper.MainMapper;
 
 @Controller
@@ -17,12 +16,6 @@ public class MainController {
     @Autowired MainMapper main_mapper;
     @GetMapping("/")
     public String getMain(Model model,HttpSession session){
-        ReaderInfoVO user = (ReaderInfoVO)session.getAttribute("user");
-        if(user == null) {
-            user = new ReaderInfoVO();
-            user.setRd_seq(0);
-        }
-        model.addAttribute("subBookList", main_mapper.selectAllMaxSubBooks(user.getRd_seq()));
         return "/index";
     }
     @GetMapping("/join")

@@ -6,11 +6,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-    <link rel="stylesheet" href="/assets/css/index.css">
     <script src="/assets/js/index.js"></script>
+    <link rel="stylesheet" href="/assets/css/index.css">
 </head>
 <body>
-    ${userSub}
     <main>
         <div class="book_recommend_area">
             <h1>독자 분들이 가장 많이 구독한 도서</h1>
@@ -38,24 +37,14 @@
                                 <button class="add_my_storage" data-seq="${item.bi_seq}" user-seq="${user.rd_seq}"><i class="fas fa-plus"></i></button>
                             </div>
                         </div>
-                            </c:forEach>
-                        </div>
+                    </c:forEach>
+                </div>
                         <div class="swiper-button-next"></div>
                         <div class="swiper-button-prev"></div>
                 </div>
             </div>
     </main>
     <script>
-        const swiper = new Swiper('.swiper', {
-            loop: true,
-            autoplay: {
-                delay:7000,
-            },
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev'
-            }
-        });
     </script>
 </body>
 </html>
