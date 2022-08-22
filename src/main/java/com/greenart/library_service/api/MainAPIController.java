@@ -27,6 +27,7 @@ public class MainAPIController {
         }
         resultMap.put("user", user);
         resultMap.put("subBookList", main_mapper.selectAllMaxSubBooks(user.getRd_seq()));
+        resultMap.put("newBookList", main_mapper.selectNewbooks(user.getRd_seq()));
         return resultMap;
     }
 }

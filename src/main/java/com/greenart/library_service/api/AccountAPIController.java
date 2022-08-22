@@ -81,6 +81,11 @@ public class AccountAPIController {
     public Map<String,Object> putBookSub(@RequestParam Integer bi_seq, HttpSession session){
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
         ReaderInfoVO user = (ReaderInfoVO)session.getAttribute("user");
+        if(user == null){
+            resultMap.put("status", false);
+            resultMap.put("message", "로그인이 필요한 서비스 입니다.");
+            return resultMap;
+        }
         account_mapper.insertUserBookSub(bi_seq, user.getRd_seq());
         resultMap.put("status", true);
         resultMap.put("message", "구독 목록에 추가 되었습니다.");
@@ -91,6 +96,11 @@ public class AccountAPIController {
     public Map<String,Object> deleteBookSub(@RequestParam Integer bi_seq, HttpSession session){
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
         ReaderInfoVO user = (ReaderInfoVO)session.getAttribute("user");
+        if(user == null){
+            resultMap.put("status", false);
+            resultMap.put("message", "로그인이 필요한 서비스 입니다.");
+            return resultMap;
+        }
         account_mapper.deleteUserBookSub(bi_seq, user.getRd_seq());
         resultMap.put("status", true);
         resultMap.put("message", "구독 목록에 삭제 되었습니다.");

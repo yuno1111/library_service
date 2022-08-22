@@ -19,7 +19,30 @@
     margin: 0 auto;
     width: 300px; height: 400px; background-position: center; background-size: 100% auto; background-repeat: no-repeat;
 }
+.book_function_area{position: relative; width: 60px;}
 .subscribe > i {
-    position: absolute; right: 0; top: 0;
+    position: relative; right: 0; top: 0;
     font-size: 22px; color: rgb(252, 53, 53); z-index: 9; cursor: pointer;
+}
+
+.book_summary_list_wrap{
+    width: 1000px; height: 500px; background-color: #fff; margin: 0 auto; margin-top: 200px;
+}
+
+.books_summary_list {width: 990px; text-align: left; margin:0 auto; padding: 20px 0px; 
+}
+.book_summary_area{display: inline-block;}
+
+
+.books_summary_item{
+    text-decoration: none; font-family: 'Noto Sans KR'; color: #333;
+}
+.books_summary_detail{width: 180px; display: inline-block; text-align-last: left; margin-left: 15px;} 
+
+.books_summary_txt {display: inline-block;}
+
+
+.books_summary_detail .books_summary_img {
+width: 175px; height: 175px; background-size: auto 100%; background-position: center;
+background-repeat: no-repeat; display: inline-block; border-radius: 10px;
 }

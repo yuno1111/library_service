@@ -1,4 +1,4 @@
-.add_my_storage{display: inline-block;}
+.add_my_storage{ display: inline-block; z-index: 99;}
 
 .add_storage_popup_area{
     position: fixed; width: 100vw; height: 100vh; left: 0; top: 0; background-color: #00000055; z-index: 99;

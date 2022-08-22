@@ -23,6 +23,20 @@
         order by subcnt desc
         limit 5
     </select>
+    <select id="selectNewbooks" resultType="com.greenart.library_service.data.BookSummaryVO">
+        select a.bi_seq ,a.bi_title ,b.bc_img_file ,c.wri_name, bsi.bsub_rd_seq as subscribe from book_info a inner join
+        (
+            select * from book_cover_info where bc_is_poster =1
+        ) b 
+        on a.bi_seq = b.bc_bi_seq left outer join writer_info c
+        on a.bi_wri_seq = c.wri_seq
+        left outer join(
+            select * from book_subscribe_info where bsub_rd_seq = #{seq}
+        ) bsi
+        on a.bi_seq = bsi.bsub_bi_seq
+        order by bi_seq desc
+        limit 10
+    </select>
 
     <select id="selectAllNoticeInfo" resultType="com.greenart.library_service.data.NoticeInfoVO">
         select a.*,b.aai_id  from notice_info a inner join admin_account_info b 

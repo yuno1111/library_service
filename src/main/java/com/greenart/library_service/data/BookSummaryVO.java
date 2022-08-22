@@ -8,4 +8,6 @@ public class BookSummaryVO {
     private String bi_title;
     private String bc_img_file;
     private String wri_name;
+
+    private Integer subscribe;
 }
