@@ -1,17 +1,8 @@
-// let sub = false;
+
 let subscribe = '';
-// const swiper = new Swiper('.swiper', {
-//     loop: true,
-//     autoplay: {
-//         delay:7000,
-//     },
-//     navigation: {
-//         nextEl: '.swiper-button-next',
-//         prevEl: '.swiper-button-prev'
-//     }
-// });
 $(function () {
     getMain();
+    
     
 })
 
@@ -24,20 +15,21 @@ function getMain() {
             let item = r.subBookList;
             let tag = '';
             tag =
+            '<h1>가장 많이 구독한 도서</h1>'+
             '<div class="swiper main_banner">' +
             '<div class="swiper-wrapper">';
             for(let i=0; i<item.length; i++){
                 tag +=
                 '<div class="swiper-slide">' +
                 '<div class="book_recommend_item">';
-                if(item.subscribe == null){
+                if(item[i].subscribe == null){
                     tag +=
-                    '<div class="subscribe" data-seq="'+item[i].bi_seq+'" user-seq="'+r.user.rd_seq+'" data-sub="'+item[i].subscribe+'">' ;
+                    '<div class="subscribe" data-seq="'+item[i].bi_seq+'" user-seq="'+r.user.rd_seq+'" data-sub="'+item[i].subscribe+'">'+
                     '<i class="far fa-heart"></i>';
                 }
-                if(item.subscribe != null){
+                if(item[i].subscribe != null){
                     tag +=
-                    '<div class="subscribe" data-seq="'+item[i].bi_seq+'" user-seq="'+r.user.rd_seq+'" data-sub="'+item[i].subscribe+'">' ;
+                    '<div class="subscribe" data-seq="'+item[i].bi_seq+'" user-seq="'+r.user.rd_seq+'" data-sub="'+item[i].subscribe+'">'+
                     '<i class="fas fa-heart"></i>';
                 }
                 tag +=
@@ -63,7 +55,7 @@ function getMain() {
             
             
             $(".book_recommend_area").append(tag);
-
+            
             $(".subscribe").click(function () {
                 let rd_seq = $(this).attr("user-seq");
                 let bi_seq = $(this).attr("data-seq");
@@ -72,9 +64,8 @@ function getMain() {
                     alert("로그인 후 이용해주세요");
                     return;
                 }
-                if (sub == '') {
-                    $(this).html("")
-                    subscribe = '<i class="fas fa-heart"></i>'
+                if (sub == 'null') {
+                    subscribe = '<i class="far fa-heart"></i>'
                     $(this).html(subscribe);
                     $.ajax({
                         url: "/api/account/book_sub?bi_seq=" + bi_seq,
@@ -84,10 +75,9 @@ function getMain() {
                             getMain()
                         }
                     })
-        
-                } else {
-                    $(this).html("")
-                    subscribe = '<i class="far fa-heart"></i>'
+                } 
+                else if(sub != 'null'){
+                    subscribe = '<i class="fas fa-heart"></i>'
                     $(this).html(subscribe);
                     $.ajax({
                         url: "/api/account/book_sub/delete?bi_seq=" + bi_seq,

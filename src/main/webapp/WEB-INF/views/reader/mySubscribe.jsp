@@ -26,7 +26,7 @@
                         </div>
                     </div>
                 </a>
-                <button class="add_my_storage" data-seq="${item.bi_seq}"><i class="fas fa-plus"></i></button>
+                <button class="add_my_storage" onClick="addStorage('${item.bi_seq}','user.rd_seq')" ><i class="fas fa-plus"></i></button>
             </c:forEach>
         </section>
     </main>

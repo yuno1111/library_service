@@ -31,6 +31,11 @@ public class ReaderAPIController {
     public Map<String,Object> getReaderStorage(@RequestParam Integer bi_seq,HttpSession session){
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
         ReaderInfoVO user = (ReaderInfoVO)session.getAttribute("user");
+        if(user == null){
+            resultMap.put("status", false);
+            resultMap.put("message", "로그인이 필요한 서비스 입니다.");
+            return resultMap;
+        }
         List<StorageVO> storage = reader_mapper.selectUserStorage(user.getRd_seq());
         if(storage.isEmpty()){
             StorageVO tempStorage = new StorageVO();
