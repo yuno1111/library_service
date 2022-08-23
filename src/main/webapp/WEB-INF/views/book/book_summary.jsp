@@ -8,7 +8,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="/assets/css/book/book_summary.css">
     <script>
-        let bi_seq = ${list.bi_seq};
+        let bi_seq = "${list.bi_seq}";
     </script>
     <script src="/assets/js/book/book_summary.js"></script>
 </head>

@@ -34,6 +34,21 @@
         on a.bre_rd_seq = b.rd_seq 
         where bre_bi_seq = #{seq} and bre_rd_seq = #{rd_seq}
     </select>
+    <select id="selectAllRecommendBooks" resultType="com.greenart.library_service.data.BookSummaryVO">
+        select b.bi_seq ,b.bi_title ,c.bc_img_file ,d.wri_name,bsi.bsub_rd_seq as subscribe  from admin_recommend_books a inner join book_info b
+        on a.ar_bi_seq = b.bi_seq left outer join 
+        (
+            select * from book_cover_info where bc_is_poster =1
+        ) c 
+        on b.bi_seq = c.bc_bi_seq left outer join writer_info d
+        on b.bi_wri_seq = d.wri_seq
+        left outer join(
+            select * from book_subscribe_info where bsub_rd_seq = #{seq}
+        ) bsi
+        on b.bi_seq = bsi.bsub_bi_seq
+        where ar_title = #{title}
+        group by bi_seq
+    </select>
 
     <insert id="insertBookReply">
         INSERT INTO book_reply

@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.greenart.library_service.data.BookContentListVO;
 import com.greenart.library_service.data.BookCoverListVO;
 import com.greenart.library_service.data.BookReplyVO;
+import com.greenart.library_service.data.BookSummaryVO;
 import com.greenart.library_service.data.Book_infoVO;
 
 @Mapper
@@ -15,6 +16,7 @@ public interface BookMapper {
     public List<BookCoverListVO>  selectBooksCoverBySeq(Integer seq);
     public List<BookContentListVO> selectBookContentBySeq(Integer seq);
     public String selectBookTextFile(Integer seq);
+    public List<BookSummaryVO> selectAllRecommendBooks(String title,Integer seq);
 
     public List<BookReplyVO> selectAllBookReply(Integer seq);
     public Integer selectAllBookReplyCnt(Integer seq);

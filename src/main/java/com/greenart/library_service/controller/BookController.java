@@ -26,6 +26,10 @@ public class BookController {
         model.addAttribute("user_comment", book_mapper.selectUserBookReply(seq, user.getRd_seq()));
         return "/book/book_summary";
     }
+    @GetMapping("/book/recommend/list")
+    public String getRecommendList(@RequestParam String title){
+        return "/book/book_recommend_list";
+    }
     @GetMapping("/book/text")
     public String getBookText(Model model,@RequestParam Integer seq){
         model.addAttribute("contentList", book_mapper.selectBookContentBySeq(seq));

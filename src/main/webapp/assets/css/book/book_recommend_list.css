@@ -1,0 +1,13 @@
+.books_summary_list {width: 990px; text-align: left; margin:0 auto; padding: 20px 0px; 
+}
+.books_summary_item{
+    text-decoration: none; font-family: 'Noto Sans KR'; color: #333; display: inline-block;
+}
+.subscribe > i {
+    position: relative; right: 0; top: 0;
+    font-size: 22px; color: rgb(252, 53, 53); z-index: 9; cursor: pointer;
+}
+.books_summary_item .book_recommend_img_area {
+width: 175px; height: 175px; background-size: auto 100%; background-position: center;
+background-repeat: no-repeat; position: relative; display: inline-block; border-radius: 10px;
+}

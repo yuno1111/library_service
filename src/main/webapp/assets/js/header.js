@@ -17,6 +17,10 @@ $(function(){
             }
         })
     })
+
+    $(".subscribe").click(function () {
+
+    })
 })
 
 function addStorage(bi_seq,rd_seq){
@@ -59,4 +63,31 @@ function addStorage(bi_seq,rd_seq){
         })
         }
     })
+}
+
+function addSubscribe(bi_seq,rd_seq,sub){
+    if (rd_seq == 0) {
+        alert("로그인 후 이용해주세요");
+        return;
+    }
+    if (sub == 'null') {
+        $.ajax({
+            url: "/api/account/book_sub?bi_seq=" + bi_seq,
+            type: "put",
+            success: function (r) {
+                alert(r.message);
+                getMain();
+            }
+        })
+    } 
+    else if(sub != 'null'){
+        $.ajax({
+            url: "/api/account/book_sub/delete?bi_seq=" + bi_seq,
+            type: "delete",
+            success: function (r) {
+                alert(r.message);
+                getMain();
+            }
+        })
+    }
 }

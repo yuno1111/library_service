@@ -24,12 +24,12 @@ function getMain() {
                 '<div class="book_recommend_item">';
                 if(item[i].subscribe == null){
                     tag +=
-                    '<div class="subscribe" data-seq="'+item[i].bi_seq+'" user-seq="'+r.user.rd_seq+'" data-sub="'+item[i].subscribe+'">'+
+                    '<div class="subscribe" onClick=addSubscribe("'+item[i].bi_seq+'","'+r.user.rd_seq+'","'+item[i].subscribe+'")>'+
                     '<i class="far fa-heart"></i>';
                 }
                 if(item[i].subscribe != null){
                     tag +=
-                    '<div class="subscribe" data-seq="'+item[i].bi_seq+'" user-seq="'+r.user.rd_seq+'" data-sub="'+item[i].subscribe+'">'+
+                    '<div class="subscribe" onClick=addSubscribe("'+item[i].bi_seq+'","'+r.user.rd_seq+'","'+item[i].subscribe+'")>'+
                     '<i class="fas fa-heart"></i>';
                 }
                 tag +=
@@ -68,7 +68,7 @@ function getMain() {
             for(let a=0; a<r.newBookList.length; a++){
                     new_book +=
                     '<div class="book_summary_area">'+
-                    '<a href="/books/book/summary?seq='+nbook[a].bi_seq+'" class="books_summary_item">'+
+                    '<a href="/book/summary?seq='+nbook[a].bi_seq+'" class="books_summary_item">'+
                     '<div class="books_summary_detail">'+
                         '<div class="books_summary_img"'+
                             'style="background-image: url(\'/images/book_cover/'+nbook[a].bc_img_file+'\')">'+
@@ -79,12 +79,12 @@ function getMain() {
                             '<p class="books_writer_name">'+nbook[a].wri_name+'</p>';
                             if(nbook[a].subscribe == null){
                                 new_book +=
-                                '<div class="subscribe" data-seq="'+nbook[a].bi_seq+'" user-seq="'+r.user.rd_seq+'" data-sub="'+nbook[a].subscribe+'">'+
+                                '<div class="subscribe" onClick=addSubscribe("'+nbook[a].bi_seq+'","'+r.user.rd_seq+'","'+nbook[a].subscribe+'")>'+
                                 '<i class="far fa-heart"></i>';
                             }
                             if(nbook[a].subscribe != null){
                                 new_book +=
-                                '<div class="subscribe" data-seq="'+nbook[a].bi_seq+'" user-seq="'+r.user.rd_seq+'" data-sub="'+nbook[a].subscribe+'">'+
+                                '<div class="subscribe" onClick=addSubscribe("'+nbook[a].bi_seq+'","'+r.user.rd_seq+'","'+nbook[a].subscribe+'")>'+
                                 '<i class="fas fa-heart"></i>';
                             }
                             new_book +=
@@ -99,7 +99,7 @@ function getMain() {
             let rec = r.recommendList;
             for(let b=0; b<r.recommendList.length; b++){
                 let recBook =
-                    '<a href="/books/list/detail?title='+rec[b].ar_title+'" class="books_summary_item">'+
+                    '<a href="/book/recommend/list?title='+rec[b].ar_title+'" class="books_summary_item">'+
                         '<div class="books_summary_detail">'+
                         '<div class="books_summary_img"'+
                             'style="background-image: url(\'/images/book_cover/'+rec[b].bc_img_file+'\')">'+
@@ -112,38 +112,6 @@ function getMain() {
                         '</div>';
                         $(".admin_recommend_list").append(recBook);
             }
-
-
-
-            $(".subscribe").click(function () {
-                let rd_seq = $(this).attr("user-seq");
-                let bi_seq = $(this).attr("data-seq");
-                let sub = $(this).attr("data-sub");
-                if (rd_seq == 0) {
-                    alert("로그인 후 이용해주세요");
-                    return;
-                }
-                if (sub == 'null') {
-                    $.ajax({
-                        url: "/api/account/book_sub?bi_seq=" + bi_seq,
-                        type: "put",
-                        success: function (r) {
-                            alert(r.message);
-                            getMain();
-                        }
-                    })
-                } 
-                else if(sub != 'null'){
-                    $.ajax({
-                        url: "/api/account/book_sub/delete?bi_seq=" + bi_seq,
-                        type: "delete",
-                        success: function (r) {
-                            alert(r.message);
-                            getMain();
-                        }
-                    })
-                }
-            })
         }
     })
 }

@@ -109,6 +109,18 @@ public class BookAPIController {
         resultMap.put("content", content);
         return resultMap;
     }
+    @GetMapping("/book/recommend/list")
+    public Map<String,Object> getBookRecommendList(HttpSession session,@RequestParam String title){
+        Map<String,Object> resultMap = new LinkedHashMap<String,Object>();
+        ReaderInfoVO user = (ReaderInfoVO)session.getAttribute("user");
+        if(user == null){
+            user = new ReaderInfoVO();
+            user.setRd_seq(0);
+        }
+        resultMap.put("user", user);
+        resultMap.put("list", book_mapper.selectAllRecommendBooks(title,user.getRd_seq()));
+        return resultMap;
+    }
     @GetMapping("/book/comment/list")
     public Map<String,Object> getBookComment(@RequestParam Integer seq, @RequestParam @Nullable Integer page){
         Map<String,Object> resultMap = new LinkedHashMap<String,Object>();
