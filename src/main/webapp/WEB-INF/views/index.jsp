@@ -20,6 +20,12 @@
 
             </section>
         </div>
+        <div class="admin_recommend_book_area">
+            <h1>추천 도서 리스트</h1>
+            <section class="admin_recommend_list">
+
+            </section>
+        </div>
     </main>
 </body>
 </html>

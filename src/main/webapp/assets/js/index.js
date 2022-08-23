@@ -11,6 +11,7 @@ function getMain() {
         success: function (r) {
             $(".books_summary_list").html("");
             $(".book_recommend_area").html("");
+            $(".admin_recommend_list").html("");
             let item = r.subBookList;
             let tag = '';
             tag =
@@ -95,12 +96,30 @@ function getMain() {
             }
             $(".books_summary_list").append(new_book);
                 
-            
+            let rec = r.recommendList;
+            for(let b=0; b<r.recommendList.length; b++){
+                let recBook =
+                    '<a href="/books/list/detail?title='+rec[b].ar_title+'" class="books_summary_item">'+
+                        '<div class="books_summary_detail">'+
+                        '<div class="books_summary_img"'+
+                            'style="background-image: url(\'/images/book_cover/'+rec[b].bc_img_file+'\')">'+
+                        '</div>'+
+                            '<div class="books_summary_txt">'+
+                                '<p class="books_list_name">'+rec[b].ar_title+'</p>'+
+                                '<p class="books_list_cnt">'+rec[b].cnt+' 권</p>'+
+                            '</a>'+
+                            '</div>'+
+                        '</div>';
+                        $(".admin_recommend_list").append(recBook);
+            }
+
+
+
             $(".subscribe").click(function () {
                 let rd_seq = $(this).attr("user-seq");
                 let bi_seq = $(this).attr("data-seq");
                 let sub = $(this).attr("data-sub");
-                if (rd_seq == '') {
+                if (rd_seq == 0) {
                     alert("로그인 후 이용해주세요");
                     return;
                 }

@@ -37,6 +37,16 @@
         order by bi_seq desc
         limit 10
     </select>
+    <select id="selectAllRecommendList" resultType="com.greenart.library_service.data.RecommendSummaryVO">
+        select a.ar_seq ,a.ar_title ,c.bc_img_file,count(b.bi_seq) as cnt from admin_recommend_books a inner join book_info b 
+        on a.ar_bi_seq = b.bi_seq inner join 
+        (
+            select * from book_cover_info where bc_is_poster = 1
+        )c on b.bi_seq = c.bc_bi_seq
+        group by ar_title 
+        order by ar_seq desc
+        limit 5
+    </select>
 
     <select id="selectAllNoticeInfo" resultType="com.greenart.library_service.data.NoticeInfoVO">
         select a.*,b.aai_id  from notice_info a inner join admin_account_info b 

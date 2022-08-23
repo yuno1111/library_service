@@ -1,4 +1,4 @@
-
+main {padding-bottom: 150px;}
 .book_recommend_area{
     width: 990px; margin: 0 auto; padding-top: 150px;
 }
@@ -46,3 +46,5 @@
 width: 175px; height: 175px; background-size: auto 100%; background-position: center;
 background-repeat: no-repeat; display: inline-block; border-radius: 10px;
 }
+
+.admin_recommend_book_area{margin: 0 auto; margin-top: 50px; width: 990px;}
